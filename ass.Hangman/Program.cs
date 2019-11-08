@@ -15,6 +15,10 @@ namespace ass.Hangman
         static string GameWords;
         static int GamesWordsLength;
         static string Namn;
+        static string CurrentWord;
+        static string incorrectWords;
+
+        static List<char> gessedChars = new List<char>();
         //static undesrScore;
         //private static object arrayofWord;
 
@@ -31,6 +35,7 @@ namespace ass.Hangman
         {
 
             rand = new Random();
+            //string wordsToGeussUppercase = GameWords.ToUpper();
             PlayHangman();
 
         }
@@ -42,20 +47,25 @@ namespace ass.Hangman
             GamesWordsLength = GameWords.Length;
 
 
+
             underScore();
 
         }
         static void underScore()
         {
             Console.WriteLine(" Enter");
+            int underScoreLength = 0;
+            string winning = "";
             Console.Write(" Skriv dit Namn:  ");
             Namn = Convert.ToString(Console.ReadLine());
             Console.Clear();
             Console.WriteLine(Namn + ", Välkomen till Häng Gubbe, börja spela");
             Console.WriteLine("");
             Console.WriteLine("Antal Lives " + Lives + "\n");
-            Console.WriteLine("Ange dit guess ord");
-
+            Console.WriteLine("Ange dit gissnings ord");
+            //Console.WriteLine("Ange dit guess ord");
+            //string GameWords = ListWord[rand.Next(0, ListWord.Length)];
+            //string wordsToGeussUppercase = GameWords.ToUpper();
             string entered = Console.ReadLine();
             string underScore = string.Empty;
 
@@ -67,17 +77,20 @@ namespace ass.Hangman
             }
                  Console.WriteLine(underScore);
                  Console.ReadKey(true);
-                 Console.WriteLine("");
+            char guess = char.ToUpper(Console.ReadKey().KeyChar);
+
+            string GeussToUppercase = GameWords.ToUpper();
+            Console.WriteLine("");
                 
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                 Console.ReadLine();
-                 char guess = char.ToUpper(Console.ReadKey().KeyChar);
+                //Console.ForegroundColor = ConsoleColor.Yellow;
+                // Console.ReadLine();
+                
             for (int i = 0; i < (GameWords.Length); i ++) 
             {
 
                 GameWords.Replace(GameWords, (" _"));
                  Console.ReadLine();
-               //CheckedGuess(GameWords,  ("_"));
+                //CheckedGuess(GameWords,  ("_"));
 
 
 
@@ -107,8 +120,77 @@ namespace ass.Hangman
                 //{
                 //    GameWords.Replace(GameWords, (" _"));
                 //    Console.ReadLine();
-
+                CheckGuess (guess);
             }  // End underScore
+
+             static void CheckGuess(char guess)
+            {
+
+
+
+                Console.WriteLine("Ange dit guess ord");
+                Console.ReadLine().ToUpper();
+                bool guessOne = false;
+                //GameWords = input[0];
+                //string entered = Console.ReadLine();
+                int underScoreLength = 0;
+
+                while (!guessOne && Lives > 0)
+                {
+                    Console.WriteLine("Ange dit guess ord :");
+                    Console.ReadLine().ToUpper();
+                    //guess = input[0];
+
+                    //int underScoreLength = 0;
+                    //string winning = " ";
+
+                    if (CurrentWord.Contains(guess))
+                    {
+                        Console.WriteLine(" Du har redan anget ´{0}´ och det är rätt !", guess);
+
+                        continue;
+
+                    }
+                    else if (incorrectWords.Contains(guess))
+                    {
+                        Console.WriteLine(" Du har redan anget´{0}´, och det är fel", guess);
+                        continue;
+
+                    }
+
+                    if (CurrentWord.Contains(guess))
+                    {
+                        Console.WriteLine(" Du har redan anget ´{0}´ och det är rätt !", guess);
+
+                        continue;
+
+                    }
+                    else if (incorrectWords.Contains(guess))
+                    {
+                        Console.WriteLine(" Du har redan anget´{0}´, och det är fel", guess);
+                        continue;
+
+                    }
+                    if (GameWords.Contains(guess))
+                    {
+                        Console.WriteLine(guess);
+                        GameWords.Replace(GameWords, (" _"));
+                        for (int i = 0; i < (GameWords.Length); i++)
+                        {
+                            if (GameWords[i] == guess)
+                            {
+                                //underScore[i] = (GameWords.Length[i];
+                                underScoreLength++;
+
+                            }
+
+
+                        } }
+
+                   //underScore();
+                }// end while
+                
+            }//end checkguess
 
 
 
